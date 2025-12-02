@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from scipy import stats
-from mlxtend.frequent_patterns import apriori, association_rules
+from mlxtend.frequent_patterns import apriori, fpgrowth, association_rules
 from sklearn.preprocessing import StandardScaler
 
 # =========================================================
@@ -591,3 +591,113 @@ class DataVisualizer:
 
         plt.tight_layout()
         plt.show()
+
+# =========================================================
+# 4. FP-GROWTH ASSOCIATION RULES MINER
+# =========================================================
+
+class FPGrowthRulesMiner:
+    """
+    A class for mining association rules using the FP-Growth algorithm.
+    """
+
+    def __init__(self, basket_bool: pd.DataFrame):
+        self.basket_bool = basket_bool
+        self.frequent_itemsets = None
+        self.rules = None
+
+    def mine_frequent_itemsets(
+        self,
+        min_support: float = 0.01,
+        max_len: int = None,
+        use_colnames: bool = True,
+    ) -> pd.DataFrame:
+
+        fi = fpgrowth(
+            self.basket_bool,
+            min_support=min_support,
+            use_colnames=use_colnames,
+            max_len=max_len,
+        )
+
+        fi.sort_values(by="support", ascending=False, inplace=True)
+        self.frequent_itemsets = fi
+        return self.frequent_itemsets
+
+    def generate_rules(
+        self,
+        metric: str = "lift",
+        min_threshold: float = 1.0,
+    ) -> pd.DataFrame:
+
+        if self.frequent_itemsets is None:
+            raise ValueError("Frequent itemsets not mined. Please run mine_frequent_itemsets() first.")
+
+        rules = association_rules(
+            self.frequent_itemsets,
+            metric=metric,
+            min_threshold=min_threshold,
+        )
+
+        rules = rules.sort_values(["lift", "confidence"], ascending=False)
+        self.rules = rules
+        return self.rules
+        
+    def add_readable_rule_str(self) -> pd.DataFrame:
+        """
+        Reuse method from Apriori implementation
+        """
+        if self.rules is None:
+            raise ValueError("rules is not available. Call generate_rules() first.")
+
+        rules = self.rules.copy()
+        rules["antecedents_str"] = rules["antecedents"].apply(lambda x: ", ".join(sorted(list(x))))
+        rules["consequents_str"] = rules["consequents"].apply(lambda x: ", ".join(sorted(list(x))))
+        rules["rule_str"] = rules["antecedents_str"] + " → " + rules["consequents_str"]
+        self.rules = rules
+        return self.rules
+
+    def filter_rules(
+        self,
+        min_support: float = None,
+        min_confidence: float = None,
+        min_lift: float = None,
+        max_len_antecedents: int = None,
+        max_len_consequents: int = None,
+    ) -> pd.DataFrame:
+
+        if self.rules is None:
+            raise ValueError("rules is not available. Call generate_rules() first.")
+
+        filtered = self.rules.copy()
+
+        if min_support is not None:
+            filtered = filtered[filtered["support"] >= min_support]
+        if min_confidence is not None:
+            filtered = filtered[filtered["confidence"] >= min_confidence]
+        if min_lift is not None:
+            filtered = filtered[filtered["lift"] >= min_lift]
+        if max_len_antecedents is not None:
+            filtered = filtered[
+                filtered["antecedents"].apply(len) <= max_len_antecedents
+            ]
+        if max_len_consequents is not None:
+            filtered = filtered[
+                filtered["consequents"].apply(len) <= max_len_consequents
+            ]
+
+        filtered = filtered.reset_index(drop=True)
+        return filtered
+
+    def save_rules(self, output_path: str, rules_df: pd.DataFrame = None):
+        """
+        Same API as Apriori
+        """
+        if rules_df is None:
+            if self.rules is None:
+                raise ValueError("No rules to save.")
+            rules_df = self.rules
+
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        rules_df.to_csv(output_path, index=False)
+        print(f"Đã lưu luật vào: {output_path}")
