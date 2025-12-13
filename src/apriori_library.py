@@ -8,6 +8,7 @@ and association rule analysis for shopping cart.
 
 import datetime as dt
 import os
+import time
 
 import matplotlib.pyplot as plt
 import numpy as np
