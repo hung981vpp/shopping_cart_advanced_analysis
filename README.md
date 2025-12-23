@@ -34,37 +34,51 @@ Project triển khai pipeline đầy đủ từ xử lý dữ liệu → khai th
 ```text
 shopping_cart_advanced_analysis/
 ├── data/
-│   ├── raw/
-│   │   └── online_retail.csv
-│   └── processed/
-│       ├── cleaned_uk_data.csv
-│       ├── basket_bool.parquet
-│       ├── rules_apriori_filtered.csv
-│       └── rules_fpgrowth_filtered.csv
+│   ├── processed/
+│   │   ├── basket_bool.parquet
+│   │   ├── cleaned_uk_data.csv
+│   │   ├── invoice_weights.csv
+│   │   ├── parameter_sensitivity_results.csv
+│   │   ├── rules_apriori_filtered.csv
+│   │   ├── rules_fpgrowth_filtered.csv
+│   │   ├── rules_weighted_full.csv
+│   │   └── rules_weighted_sample.csv
+│   └── raw/
+│       └── online_retail.csv
 │
 ├── notebooks/
-│   ├── preprocessing_and_eda.ipynb
-│   ├── basket_preparation.ipynb
+│   ├── runs/
+│   │   ├── apriori_modelling_run.ipynb
+│   │   ├── basket_preparation_run.ipynb
+│   │   ├── compare_apriori_fpgrowth_run.ipynb
+│   │   ├── compare_parameter_sensitivity_run.ipynb
+│   │   ├── fp_growth_modelling_run.ipynb
+│   │   └── preprocessing_and_eda_run.ipynb
+│   ├── analysis_results.ipynb
 │   ├── apriori_modelling.ipynb
+│   ├── basket_preparation.ipynb
 │   ├── fp_growth_modelling.ipynb
-│   ├── compare_apriori_fpgrowth.ipynb
-│   └── runs/
-│       ├── preprocessing_and_eda_run.ipynb
-│       ├── basket_preparation_run.ipynb
-│       ├── apriori_modelling_run.ipynb
-│       ├── fp_growth_modelling_run.ipynb
-│       └── compare_apriori_fpgrowth_run.ipynb
+│   ├── preprocessing_and_eda.ipynb
+│   └── weighted_association_rules.ipynb
 │
 ├── src/
 │   └── apriori_library.py
 │
-├── dashboard/
-│   ├── app.py
-│   └── requirements.txt
+├── visualizations/
+│   ├── chart_category_heatmap.png
+│   ├── chart_num_rules.png
+│   ├── chart_speedup.png
+│   ├── chart_time_comparison.png
+│   ├── chart_top10_weighted.png
+│   └── chart_weighted_support.png
 │
-├── run_papermill.py
+├── .gitignore.txt
+├── LICENSE.txt
+├── README.md
+├── report_lab2.md
 ├── requirements.txt
-└── README.md
+└── run_papermill.py
+
 ```
 
 ---
@@ -178,6 +192,8 @@ Correlation-aware rule ranking
 ### Author
 Project được thực hiện bởi:
 Trang Le
+Project được fork lại bởi:
+Nhóm 6 - CNTT 17-10
 
 📄 License
 MIT — sử dụng tự do cho nghiên cứu, học thuật và ứng dụng nội bộ.
