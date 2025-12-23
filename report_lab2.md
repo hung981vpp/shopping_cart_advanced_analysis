@@ -51,7 +51,7 @@ Test 6 ngưỡng support khác nhau:
 
 ### 1. So sánh thời gian thực thi
 
-![Chart 1: Time Comparison](../visualizations/chart_time_comparison.png)
+![Chart 1: Time Comparison](/visualizations/chart_time_comparison.png)
 
 **Quan sát bất ngờ:**
 
@@ -70,7 +70,7 @@ Test 6 ngưỡng support khác nhau:
 
 ### 2. Speedup theo support
 
-![Chart 2: Speedup Analysis](../visualizations/chart_speedup.png)
+![Chart 2: Speedup Analysis](/visualizations/chart_speedup.png)
 
 **Giải thích:** Speedup thấp (max 1.36x) vì:
 1. **Support cao** (≥1.5%) → Ít itemsets (2-738) → Apriori vẫn nhanh
@@ -86,7 +86,7 @@ Test 6 ngưỡng support khác nhau:
 
 ### 3. Số lượng rules theo support
 
-![Chart 3: Number of Rules](../visualizations/chart_num_rules.png)
+![Chart 3: Number of Rules](/visualizations/chart_num_rules.png)
 
 **Quan sát quan trọng:**
 
@@ -127,7 +127,7 @@ Test 6 ngưỡng support khác nhau:
 
 ### 1. Normal vs Weighted Support
 
-![Chart 4: Support Comparison](../visualizations/chart_weighted_support.png)
+![Chart 4: Support Comparison](/visualizations/chart_weighted_support.png)
 
 **Quan sát:**
 - **100% rules có weighted_support > normal support**
@@ -139,7 +139,7 @@ Test 6 ngưỡng support khác nhau:
 
 ### 2. Đặc trưng của từng nhóm
 
-![Chart 5: Category Heatmap](../visualizations/chart_category_heatmap.png)
+![Chart 5: Category Heatmap](/visualizations/chart_category_heatmap.png)
 
 **So sánh Mass Market Stars vs Other:**
 
@@ -156,7 +156,7 @@ Test 6 ngưỡng support khác nhau:
 
 ### 3. Top 10 Rules theo Weighted Lift
 
-![Chart 6: Top 10 Weighted Rules](../visualizations/chart_top10_weighted.png)
+![Chart 6: Top 10 Weighted Rules](/visualizations/chart_top10_weighted.png)
 
 **Top 3:**
 
