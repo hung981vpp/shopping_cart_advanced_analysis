@@ -132,7 +132,7 @@ notebooks/runs/
 Các tham số có thể chỉnh trong `run_papermill.py` hoặc trong cell `PARAMETERS` của mỗi notebook:
 
 ```python
-MIN_SUPPORT=0.01
+MIN_SUPPORT=0.02
 MAX_LEN=3
 FILTER_MIN_CONF=0.3
 FILTER_MIN_LIFT=1.2
